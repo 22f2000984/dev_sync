@@ -2,11 +2,11 @@ name: Daily Automated Commit
 
 on:
   schedule:
-    - cron: "30 3 * * *"
+    - cron: "23 12 * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write   # 🔴 REQUIRED to allow git push
+  contents: write   # REQUIRED to allow git push
 
 jobs:
   daily-commit:

@@ -1,33 +1,26 @@
-name: "Daily DevSync Update - 22f2000984@ds.study.iitm.ac.in"
+name: Daily Automated Commit
 
 on:
   schedule:
-    # Runs daily at 3:15 AM UTC (specific time required - no wildcards)
-    - cron: '37 12 * * *'
-  workflow_dispatch:  # Manual test button
+    - cron: "47 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # REQUIRED to allow git push
 
 jobs:
-  daily-update:
+  daily-commit:
     runs-on: ubuntu-latest
+
     steps:
-    - name: "Checkout by 22f2000984@ds.study.iitm.ac.in"
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: "Create daily status update"
-      run: |
-        echo "# DevSync Daily Status - $(date)" > STATUS.md
-        echo "## Last updated: $(date -u)" >> STATUS.md
-        echo "- Repository active ✅" >> STATUS.md
-        echo "- Workflow successful ✅" >> STATUS.md
-        echo "- Compliance check passed ✅" >> STATUS.md
-
-    - name: "Commit daily update"
-      run: |
-        git config user.name "DevSync Bot"
-        git config user.email "22f2000984@ds.study.iitm.ac.in"
-        git add STATUS.md
-        git commit -m "DevSync Daily Update: $(date) - Activity tracking & compliance"
-        git push
+      - name: Automated commit by 22f2000984@ds.study.iitm.ac.in
+        run: |
+          echo "Last automated update: $(date -u)" > daily-update.txt
+          git config user.name "22f2000984"
+          git config user.email "22f2000984@ds.study.iitm.ac.in"
+          git add daily-update.txt
+          git commit -m "Daily automated update" || echo "No changes to commit"
+          git push

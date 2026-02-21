@@ -1,0 +1,23 @@
+name: Daily Automated Commit
+
+on:
+  schedule:
+    - cron: "30 3 * * *"   # Runs daily at 03:30 UTC
+  workflow_dispatch:
+
+jobs:
+  daily-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Automated commit by 22f2000984@ds.study.iitm.ac.in
+        run: |
+          echo "Last automated update: $(date -u)" > daily-update.txt
+          git config user.name "DevSync Automation Bot"
+          git config user.email "22f2000984@ds.study.iitm.ac.in"
+          git add daily-update.txt
+          git commit -m "Daily automated update" || echo "No changes to commit"
+          git push
